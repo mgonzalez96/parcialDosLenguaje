@@ -1,8 +1,10 @@
 package com.mariana.parcialDos.configuracion;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,6 +39,17 @@ public class SeguridadConfig {
             .build();
 
         return new InMemoryUserDetailsManager(user);
+    }
+    
+    /*
+     * Clase de configuración y método Bean para tomar el archivo .properties de donde va a obtener los mensajes
+     */
+    @Bean
+    MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
     
 }
