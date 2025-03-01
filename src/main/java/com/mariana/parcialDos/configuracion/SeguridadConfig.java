@@ -5,50 +5,58 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-/*import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;*/
+import org.springframework.security.web.SecurityFilterChain;
 
-//@Configuration
-//@EnableAutoConfiguration
+@Configuration
+@EnableAutoConfiguration
 public class SeguridadConfig {
+	
+	/*
+	 * método Bean para permitir el acceso sin logueo de los endpoints
+	 */
+	@Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable()) // 🔴 Desactiva CSRF para permitir POST, PUT y DELETE en Postman
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/v1/").permitAll()
+                .anyRequest().authenticated()
+            )
+            .httpBasic(Customizer.withDefaults()) // 🔑 Habilita autenticación básica
+            .formLogin(Customizer.withDefaults()); // 📝 Habilita formulario de login
 
-	// Maneja la seguridad de la aplicación, permite que si la ruta es publico
-	// ingrese sin loguearse,
-	// para otras rutas solicita logueo
-	/*@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-		// .requestMatchers("/api/v1/saludo").permitAll()
-		.requestMatchers("/api/v1/listAllProducto").permitAll().anyRequest().authenticated().and()
-		.formLogin().and().httpBasic();
-
-		return http.build();
-    return http.build();
-	}*/
-
-	/*@Bean
-	UserDetailsService userDetailsService() {
-		UserDetails user = User.withDefaultPasswordEncoder().username("user").password("password").roles("USER")
-				.build();
-
-		return new InMemoryUserDetailsManager(user);
-	}*/
-
+        return http.build();
+    }
 
 	/*
-	 * Clase de configuración y método Bean para tomar el archivo .properties de
+	 * método Bean para configurar los usuarios de logueo
+	 */
+    @Bean
+    MapReactiveUserDetailsService userDetailsService() {
+        UserDetails user = User.builder()
+            .username("user")
+            .password("password") // 🔑 Cifra la contraseña con BCrypt
+            .roles("USER")
+            .build();
+
+        return new MapReactiveUserDetailsService(user);
+    }
+    
+	/*
+	 * método Bean para tomar el archivo .properties de
 	 * donde va a obtener los mensajes
 	 */
-	/*@Bean
+	@Bean
 	MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
-	}*/
+	}
 
 }

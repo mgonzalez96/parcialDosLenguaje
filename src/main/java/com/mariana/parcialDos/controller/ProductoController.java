@@ -1,10 +1,8 @@
 package com.mariana.parcialDos.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +15,12 @@ import com.mariana.parcialDos.dto.Producto;
 import com.mariana.parcialDos.service.ProductoService;
 
 @RestController
-@RequestMapping("/api/v1/producto")
+@RequestMapping("/api/v1")
 public class ProductoController {
 
 	@Autowired
 	ProductoService productoService;
+
 	
 	//---------------- CRUD CON BD -------------------------------------//
 
@@ -83,7 +82,8 @@ public class ProductoController {
 	 * @Descripcion: Agrega un producto a la lista de productos
 	 */
 	@PostMapping("/agregarProducto")
-	public ResponseEntity<Integer> agregarProducto(@RequestBody @Validated Producto producto) throws Exception {
+	public ResponseEntity<Integer> agregarProducto(@RequestBody Producto producto) throws Exception {
+		System.out.println("1.1--agregarProducto");
 		return ResponseEntity.ok(productoService.agregarProducto(producto));
 	}
 	

@@ -101,6 +101,7 @@ public class ProductoServiceImpl implements ProductoService {
 		try {
 			return listaProducto;
 		} catch (Exception e) {
+			System.err.println("Exception ProductoServiceImpl listAllProducto: "+e.toString());
 			return new ArrayList<>();
 		}		
 	}
