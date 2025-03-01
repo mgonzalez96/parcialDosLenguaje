@@ -1,0 +1,11 @@
+LEEME
+
+Buenas noches profesora
+
+1. Aquí adjunto el link de las pruebas realizadas con postman: 
+
+https://ingenieria-software.postman.co/workspace/Ingenieria-Software-Workspace~2b75e2ec-7cb9-472b-850c-33c691691d64/folder/42073553-69ca6764-b3a5-4987-8345-275e381ce1d8?action=share&source=copy-link&creator=42073553&ctx=documentation
+----------------------------------------------------------------
+https://ingenieria-software.postman.co/workspace/Ingenieria-Software-Workspace~2b75e2ec-7cb9-472b-850c-33c691691d64/folder/42073553-69ca6764-b3a5-4987-8345-275e381ce1d8?action=share&creator=42073553&ctx=documentation
+
+2. Adjunto en un archivo la base de datos ya que incluí un CRUD para BD
